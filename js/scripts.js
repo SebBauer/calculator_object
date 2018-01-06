@@ -14,17 +14,27 @@ function Calc(button) {
         this._button.addEventListener('click', this._result.bind(this), true);      
     };
     
-    Calc.prototype._evaluation = function(operator){
+    Calc.prototype._regExp = function(){
+    
+        const _numberRegExp = /^\d{1,}(\.\d{1,})*$/;
+        this._testNumber1 = _numberRegExp.test(this._collectionNumbers[0].value);
+        this._testNumber2 = _numberRegExp.test(this._collectionNumbers[1].value);
         
-        const _numberRegExp = /^\d+$/;
-        var testNumber1 = _numberRegExp.test(this._collectionNumbers[0].value);
-        var testNumber2 = _numberRegExp.test(this._collectionNumbers[1].value);
-        
-        if(testNumber1 == false || testNumber2 == false){
-            this._score = 'Uzyj wyłącznie cyfr od 0 do 9';
+        if(this._testNumber1 == true && this._testNumber2 == true){
+            this._evaluation(document.activeElement.value);
         }
-
-        if(testNumber1 == true && testNumber2 == true){      
+        
+        if(this._testNumber1 == false || this._testNumber2 == false){
+            this._errTestNumberFalse();
+        }
+        
+        if(!this._collectionNumbers[0].value || !this._collectionNumbers[1].value){
+            this._errBlankValues();
+        }
+    }
+    
+    Calc.prototype._evaluation = function(operator){
+   
             this.num1 = parseFloat(this._collectionNumbers[0].value);
             this.num2 = parseFloat(this._collectionNumbers[1].value);
             
@@ -45,17 +55,23 @@ function Calc(button) {
                 case '/' :
                 this._score = this.num1 / this.num2;
                 break;
-            }
-        }
+            } 
         
-         if(!this._collectionNumbers[0].value || !this._collectionNumbers[1].value){
-            this._score = 'Wykryto puste pola, uzupełnij wszystkie pola';
-        }
+            this._score = this._score.toFixed(5); 
     }
     
+    
+    Calc.prototype._errTestNumberFalse = function(){
+        this._score = 'Uzyj wyłącznie cyfr od 0 do 9';
+    }
+    
+    Calc.prototype._errBlankValues = function(){
+        this._score = 'Wykryto puste pola, uzupełnij wszystkie pola';
+    }
+           
     Calc.prototype._result = function(e){
         e.preventDefault();
-        this._evaluation(document.activeElement.value);
+        this._regExp();
         this._res.innerText = this._score;
     }
     
