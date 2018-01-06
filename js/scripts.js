@@ -34,9 +34,8 @@ function Calc(button) {
     }
     
     Calc.prototype._evaluation = function(operator){
-   
-            this.num1 = parseFloat(this._collectionNumbers[0].value);
-            this.num2 = parseFloat(this._collectionNumbers[1].value);
+        
+        this._collectNumbers();
             
             switch(operator) {
                        
@@ -57,6 +56,11 @@ function Calc(button) {
                 break;
             }   
             this._scoreReplaceAndFixed();
+    }
+    
+    Calc.prototype._collectNumbers = function(){
+        this.num1 = parseFloat(this._collectionNumbers[0].value);
+        this.num2 = parseFloat(this._collectionNumbers[1].value);    
     }
     
     Calc.prototype._scoreReplaceAndFixed = function(){
