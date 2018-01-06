@@ -61,7 +61,7 @@ function Calc(button) {
     
     Calc.prototype._scoreReplaceAndFixed = function(){
             this._score = this._score.toFixed(5);
-            this._score = this._score.replace(/(0)*$/,'');
+            this._score = this._score.replace(/\.*(0)*$/,'');
     }
     
     Calc.prototype._errTestNumberFalse = function(){
