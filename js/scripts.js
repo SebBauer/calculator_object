@@ -55,11 +55,14 @@ function Calc(button) {
                 case '/' :
                 this._score = this.num1 / this.num2;
                 break;
-            } 
-        
-            this._score = this._score.toFixed(5); 
+            }   
+            this._scoreReplaceAndFixed();
     }
     
+    Calc.prototype._scoreReplaceAndFixed = function(){
+            this._score = this._score.toFixed(5);
+            this._score = this._score.replace(/(0)*$/,'');
+    }
     
     Calc.prototype._errTestNumberFalse = function(){
         this._score = 'Uzyj wyłącznie cyfr od 0 do 9';
