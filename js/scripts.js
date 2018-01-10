@@ -24,12 +24,8 @@ function Calc(button) {
             this._evaluation(document.activeElement.value);
         }
         
-        if(this._testNumber1 == false || this._testNumber2 == false){
-            this._errTestNumberFalse();
-        }
-        
-        if(!this._collectionNumbers[0].value || !this._collectionNumbers[1].value){
-            this._errBlankValues();
+        else{
+            this._errorsValidation();
         }
     }
     
@@ -40,19 +36,19 @@ function Calc(button) {
             switch(operator) {
                        
                 case '+' :
-                this._score = this.num1 + this.num2;
+                this._addition();
                 break;
         
                 case '-' :
-                this._score = this.num1 - this.num2;
+                this._subtraction();
                 break;
         
                 case '*' :
-                this._score = this.num1 * this.num2;
+                this._multiplication();
                 break;
         
                 case '/' :
-                this._score = this.num1 / this.num2;
+                this._division();
                 break;
             }   
             this._scoreReplaceAndFixed();
@@ -68,12 +64,32 @@ function Calc(button) {
             this._score = this._score.replace(/\.*(0)*$/,'');
     }
     
-    Calc.prototype._errTestNumberFalse = function(){
-        this._score = 'Uzyj wyłącznie cyfr od 0 do 9';
+    Calc.prototype._errorsValidation = function(){
+        
+        if(!this._collectionNumbers[0].value || !this._collectionNumbers[1].value){
+            this._score = 'Wykryto puste pola, uzupełnij wszystkie pola';
+        }
+        
+        else if(this._testNumber1 == false || this._testNumber2 == false){
+            this._score = 'Uzyj wyłącznie cyfr od 0 do 9';
+        }
+            
     }
     
-    Calc.prototype._errBlankValues = function(){
-        this._score = 'Wykryto puste pola, uzupełnij wszystkie pola';
+    Calc.prototype._addition = function(){
+        this._score = this.num1 + this.num2;    
+    }    
+    
+    Calc.prototype._subtraction = function(){
+        this._score = this.num1 - this.num2;    
+    }    
+    
+    Calc.prototype._multiplication = function(){
+        this._score = this.num1 * this.num2;    
+    }    
+    
+    Calc.prototype._division = function(){
+        this._score = this.num1 / this.num2;    
     }
            
     Calc.prototype._result = function(e){
